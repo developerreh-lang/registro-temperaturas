@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Web Page</title>
+    <title>Formulario de Registro</title>
     <style>
-        /* Base styles */
+        /* Variables globales */
         :root {
             --primary-color: #0077cc;
             --secondary-color: #f4f4f4;
             --text-color: #333;
             --font-family: 'Arial', sans-serif;
+            --border-radius: 8px;
+            --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Reset de estilos */
         * {
             margin: 0;
             padding: 0;
@@ -24,127 +27,185 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--secondary-color);
+            padding: 1rem;
         }
 
-        /* Header */
-        .header {
-            background: var(--primary-color);
-            color: #fff;
-            padding: 1rem 0;
-        }
-
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
+        .container {
+            max-width: 500px;
             margin: 0 auto;
-            padding: 0 1rem;
+            background: #fff;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
 
-        .logo {
-            font-size: 1.5rem;
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: bold;
         }
 
-        .nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav a:hover {
-            color: #ffdd57;
-        }
-
-        /* Main Content */
-        .section {
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            background-color: #fff;
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
         }
 
-        .section h2 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 1rem 0;
+        button {
+            width: 100%;
+            padding: 0.75rem;
             background: var(--primary-color);
             color: #fff;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem 1rem;
-            }
+        button:hover {
+            background: #005fa3;
+        }
+
+        .data-view {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--secondary-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .data-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.2rem;
+            body {
+                padding: 0.5rem;
             }
-            
-            .section h2 {
-                font-size: 1.5rem;
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            button {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">My Website</h1>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+    <div class="container">
+        <h1>Registro de Datos</h1>
+        <form id="dataForm">
+            <label for="temperature">Temperatura:</label>
+            <input 
+                type="number" 
+                id="temperature" 
+                name="temperature" 
+                placeholder="Ingresa la temperatura" 
+                required 
+            >
+
+            <label for="location">Ubicación:</label>
+            <input 
+                type="text" 
+                id="location" 
+                name="location" 
+                placeholder="Ingresa la ubicación" 
+                required 
+            >
+
+            <button type="submit">Guardar</button>
+        </form>
+
+        <div class="data-view" id="dataView">
+            <h2>Datos Registrados</h2>
+            <!-- Aquí se mostrarán los datos -->
         </div>
-    </header>
-    <main class="main">
-        <section id="home" class="section">
-            <h2>Welcome to My Website</h2>
-            <p>This is a clean and responsive design with CSS.</p>
-        </section>
-        <section id="about" class="section">
-            <h2>About Us</h2>
-            <p>Learn more about our team and mission.</p>
-        </section>
-        <section id="services" class="section">
-            <h2>Our Services</h2>
-            <p>Discover the amazing services we offer.</p>
-        </section>
-        <section id="contact" class="section">
-            <h2>Contact Us</h2>
-            <p>Get in touch with us today!</p>
-        </section>
-    </main>
-    <footer class="footer">
-        <p>&copy; 2025 My Website. All rights reserved.</p>
-    </footer>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const form = document.getElementById('dataForm');
+        const temperatureInput = document.getElementById('temperature');
+        const locationInput = document.getElementById('location');
+        const dataView = document.getElementById('dataView');
+
+        // Configuración inicial
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStoredData();
+            temperatureInput.focus(); // Foco inicial en temperatura
+        });
+
+        // Manejo del envío del formulario
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // Validar manualmente los campos
+            if (!form.checkValidity()) {
+                alert('Por favor, completa todos los campos correctamente.');
+                if (!temperatureInput.checkValidity()) {
+                    temperatureInput.focus();
+                } else if (!locationInput.checkValidity()) {
+                    locationInput.focus();
+                }
+                return;
+            }
+
+            // Guardar los datos
+            const temperature = temperatureInput.value;
+            const location = locationInput.value;
+            saveDataToLocalStorage(temperature, location);
+
+            // Limpiar formulario y establecer foco
+            form.reset();
+            temperatureInput.focus();
+        });
+
+        // Guardar datos en Local Storage
+        function saveDataToLocalStorage(temperature, location) {
+            const storedData = JSON.parse(localStorage.getItem('records')) || [];
+            storedData.push({ temperature, location, timestamp: new Date().toLocaleString() });
+            localStorage.setItem('records', JSON.stringify(storedData));
+            loadStoredData();
+        }
+
+        // Cargar datos almacenados
+        function loadStoredData() {
+            const storedData = JSON.parse(localStorage.getItem('records')) || [];
+            dataView.innerHTML = '<h2>Datos Registrados</h2>';
+
+            if (storedData.length === 0) {
+                dataView.innerHTML += '<p>No hay datos registrados.</p>';
+                return;
+            }
+
+            storedData.forEach((record, index) => {
+                const dataItem = document.createElement('div');
+                dataItem.classList.add('data-item');
+                dataItem.innerHTML = `
+                    <p><strong>${index + 1}. Temperatura:</strong> ${record.temperature}°C</p>
+                    <p><strong>Ubicación:</strong> ${record.location}</p>
+                    <p><small>${record.timestamp}</small></p>
+                `;
+                dataView.appendChild(dataItem);
+            });
+        }
+    </script>
 </body>
 </html>
