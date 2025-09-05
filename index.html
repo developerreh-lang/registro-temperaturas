@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Temperaturas</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    form { margin-bottom: 2em; }
+    input, button { margin: .5em 0; padding: .5em; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+    th, td { border: 1px solid #ccc; padding: .5em; text-align: left; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h1>Registro de Temperaturas</h1>
+  <form id="tempForm">
+    <label>
+      Temperatura (°C):
+      <input type="number" id="temperatura" required>
+    </label><br>
+    <label>
+      Ubicación:
+      <input type="text" id="ubicacion" required>
+    </label><br>
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Historial de registros</h2>
+  <table id="registrosTable">
+    <thead>
+      <tr>
+        <th>Temperatura (°C)</th>
+        <th>Ubicación</th>
+        <th>Fecha y hora</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Los registros aparecerán aquí -->
+    </tbody>
+  </table>
+
+  <script>
+    function cargarRegistros() {
+      const registros = JSON.parse(localStorage.getItem('registrosTemp') || '[]');
+      const tbody = document.querySelector('#registrosTable tbody');
+      tbody.innerHTML = '';
+      registros.forEach(registro => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${registro.temperatura}</td>
+          <td>${registro.ubicacion}</td>
+          <td>${registro.fecha}</td>
+        `;
+        tbody.appendChild(fila);
+      });
+    }
+
+    document.getElementById('tempForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const temperatura = document.getElementById('temperatura').value;
+      const ubicacion = document.getElementById('ubicacion').value;
+      const fecha = new Date().toLocaleString();
+      const nuevoRegistro = { temperatura, ubicacion, fecha };
+      const registros = JSON.parse(localStorage.getItem('registrosTemp') || '[]');
+      registros.push(nuevoRegistro);
+      localStorage.setItem('registrosTemp', JSON.stringify(registros));
+      cargarRegistros();
+      this.reset();
+    });
+
+    window.onload = cargarRegistros;
+  </script>
+</body>
+</html>
