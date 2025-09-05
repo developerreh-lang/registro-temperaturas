@@ -1,103 +1,150 @@
 <!DOCTYPE html>
-<html lang="es" >
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Registro de Temperaturas</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2em;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Page</title>
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #0077cc;
+            --secondary-color: #f4f4f4;
+            --text-color: #333;
+            --font-family: 'Arial', sans-serif;
+        }
 
-    form {
-      margin-bottom: 2em;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    input,
-    button {
-      margin: .5em 0;
-      padding: .5em;
-    }
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 1em;
-    }
+        /* Header */
+        .header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 1rem 0;
+        }
 
-    th,
-    td {
-      border: 1px solid #ccc;
-      padding: .5em;
-      text-align: left;
-    }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
 
-    th {
-      background: #f0f0f0;
-    }
-  </style>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #ffdd57;
+        }
+
+        /* Main Content */
+        .section {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fff;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .section {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <h1>Registro de Temperaturas</h1>
-  <form id="tempForm">
-    <label>
-      Temperatura (°C):
-      <input type="number" id="temperatura" required>
-    </label><br>
-    <label>
-      Ubicación:
-      <input type="text" id="ubicacion" required>
-    </label><br>
-    <button type="submit">Guardar</button>
-  </form>
-
-  <h2>Historial de registros</h2>
-  <table id="registrosTable">
-    <thead>
-      <tr>
-        <th>Temperatura (°C)</th>
-        <th>Ubicación</th>
-        <th>Fecha y hora</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Los registros aparecerán aquí -->
-    </tbody>
-  </table>
-
-  <script>
-    function cargarRegistros() {
-      const registros = JSON.parse(localStorage.getItem('registrosTemp') || '[]');
-      const tbody = document.querySelector('#registrosTable tbody');
-      tbody.innerHTML = '';
-      registros.forEach(registro => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-          <td>${registro.temperatura}</td>
-          <td>${registro.ubicacion}</td>
-          <td>${registro.fecha}</td>
-        `;
-        tbody.appendChild(fila);
-      });
-    }
-
-    document.getElementById('tempForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const temperatura = document.getElementById('temperatura').value;
-      const ubicacion = document.getElementById('ubicacion').value;
-      const fecha = new Date().toLocaleString();
-      const nuevoRegistro = { temperatura, ubicacion, fecha };
-      const registros = JSON.parse(localStorage.getItem('registrosTemp') || '[]');
-      registros.push(nuevoRegistro);
-      localStorage.setItem('registrosTemp', JSON.stringify(registros));
-      cargarRegistros();
-      this.reset();
-    });
-
-    window.onload = cargarRegistros;
-  </script>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">My Website</h1>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <section id="home" class="section">
+            <h2>Welcome to My Website</h2>
+            <p>This is a clean and responsive design with CSS.</p>
+        </section>
+        <section id="about" class="section">
+            <h2>About Us</h2>
+            <p>Learn more about our team and mission.</p>
+        </section>
+        <section id="services" class="section">
+            <h2>Our Services</h2>
+            <p>Discover the amazing services we offer.</p>
+        </section>
+        <section id="contact" class="section">
+            <h2>Contact Us</h2>
+            <p>Get in touch with us today!</p>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 My Website. All rights reserved.</p>
+    </footer>
 </body>
-
 </html>
