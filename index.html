@@ -1,183 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de temperaturas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Variables globales */
-        :root {
-            --primary-color: #0077cc;
-            --secondary-color: #f4f4f4;
-            --text-color: #333;
-            --font-family: 'Arial', sans-serif;
-            --border-radius: 8px;
-            --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Reset de estilos */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Estilos generales */
         body {
-            font-family: var(--font-family);
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--secondary-color);
-            padding: 1rem;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* Contenedor principal */
         .container {
+            width: 100%;
             max-width: 500px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        h1 {
+        /* Encabezado */
+        .title {
             text-align: center;
-            color: var(--primary-color);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2rem;
+        }
+
+        /* Estilo para etiquetas y entradas */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Contenedor del omnibox */
+        .omnibox-container {
+            position: relative;
             margin-bottom: 1.5rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        input[type="text"], input[type="number"] {
+        .omnibox-input {
             width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
+            padding-right: 2.5rem;
         }
 
-        button {
+        .location-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            cursor: pointer;
+        }
+
+        /* Lista de sugerencias */
+        .suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .suggestion-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f3f4f6;
+        }
+        
+        /* Botón */
+        .save-button {
             width: 100%;
             padding: 0.75rem;
-            background: var(--primary-color);
-            color: #fff;
+            background-color: #2563eb;
+            color: #ffffff;
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background-color 0.2s ease-in-out;
         }
 
-        button:hover {
-            background: #005fa3;
+        .save-button:hover {
+            background-color: #1d4ed8;
         }
-
+        
+        /* Contenedor de datos */
         .data-view {
             margin-top: 2rem;
-            padding: 1rem;
-            background: var(--secondary-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            background-color: #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-view-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
         }
 
         .data-item {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #ccc;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #d1d5db;
         }
 
         .data-item:last-child {
             border-bottom: none;
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 0.5rem;
-            }
-
-            .container {
-                padding: 1.5rem;
-            }
-
-            button {
-                font-size: 0.9rem;
-            }
+        .data-item p {
+            font-size: 0.95rem;
+            color: #4b5563;
         }
+        
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Temperaturas</h1>
+        <h1 class="title">Registro de temperaturas</h1>
         <form id="dataForm">
-            <label for="temperature">Temperatura:</label>
+            <label for="temperature" class="form-label">Temperatura:</label>
             <input 
                 type="number" 
                 id="temperature" 
                 name="temperature" 
                 placeholder="Ingresa la temperatura" 
+                class="form-input"
                 required 
             >
 
-            <label for="location">Ubicación:</label>
-            <input 
-                type="text" 
-                id="location" 
-                name="location" 
-                placeholder="Ingresa la ubicación" 
-                required 
-            >
+            <label for="location" class="form-label">Ubicación:</label>
+            <div class="omnibox-container">
+                <input 
+                    type="text" 
+                    id="location" 
+                    name="location" 
+                    placeholder="Busca una ubicación de Murcia" 
+                    class="form-input omnibox-input"
+                    autocomplete="off"
+                    required 
+                >
+                <div class="location-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <ul id="suggestionsList" class="suggestions-list hidden"></ul>
+            </div>
 
-            <button type="submit">Guardar</button>
+            <button type="submit" class="save-button">Guardar</button>
         </form>
 
         <div class="data-view" id="dataView">
-            <h2>Datos Registrados</h2>
+            <h2 class="data-view-title">Datos Registrados</h2>
             <!-- Aquí se mostrarán los datos -->
         </div>
     </div>
 
     <script>
-        // Elementos del DOM
         const form = document.getElementById('dataForm');
         const temperatureInput = document.getElementById('temperature');
         const locationInput = document.getElementById('location');
         const dataView = document.getElementById('dataView');
+        const suggestionsList = document.getElementById('suggestionsList');
 
-        // Configuración inicial
+        // Lista de municipios de la Región de Murcia
+        const murciaMunicipalities = [
+            "Murcia", "Cartagena", "Lorca", "Molina de Segura", "Alcantarilla",
+            "Cieza", "Águilas", "Yecla", "Torre-Pacheco", "San Javier",
+            "Totana", "Mazarrón", "Caravaca de la Cruz", "Jumilla",
+            "Las Torres de Cotillas", "La Unión", "Archena", "San Pedro del Pinatar",
+            "Ceutí", "Cehegín", "Fuente Álamo de Murcia", "Santomera",
+            "Los Alcázares", "Mula", "Beniel", "Alhama de Murcia",
+            "Puerto Lumbreras", "Abarán", "Pliego", "Moratalla"
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             loadStoredData();
-            temperatureInput.focus(); // Foco inicial en temperatura
+            temperatureInput.focus();
         });
 
+        // Manejar la entrada de texto para filtrar la lista de municipios
+        locationInput.addEventListener('input', () => {
+            const query = locationInput.value.toLowerCase().trim(); // Limpiamos el espacio en blanco al inicio y final
+            if (query.length > 0) {
+                // Dividimos la consulta en palabras individuales
+                const queryWords = query.split(' ');
+                
+                // Filtramos la lista de municipios
+                const filteredSuggestions = murciaMunicipalities.filter(town => {
+                    const normalizedTown = town.toLowerCase();
+                    // Verificamos si CADA palabra de la consulta está incluida en el nombre del municipio
+                    return queryWords.every(word => normalizedTown.includes(word));
+                });
+                displaySuggestions(filteredSuggestions);
+            } else {
+                suggestionsList.innerHTML = '';
+                suggestionsList.classList.add('hidden');
+            }
+        });
+
+        // Mostrar las sugerencias en la lista
+        function displaySuggestions(predictions) {
+            suggestionsList.innerHTML = '';
+            if (predictions.length > 0) {
+                predictions.forEach(prediction => {
+                    const li = document.createElement('li');
+                    li.classList.add('suggestion-item');
+                    li.textContent = prediction;
+                    li.addEventListener('click', () => {
+                        locationInput.value = prediction;
+                        suggestionsList.innerHTML = '';
+                        suggestionsList.classList.add('hidden');
+                    });
+                    suggestionsList.appendChild(li);
+                });
+                suggestionsList.classList.remove('hidden');
+            } else {
+                suggestionsList.classList.add('hidden');
+            }
+        }
+        
         // Manejo del envío del formulario
         form.addEventListener('submit', (event) => {
             event.preventDefault();
 
-            // Validar manualmente los campos
             if (!form.checkValidity()) {
-                alert('Por favor, completa todos los campos correctamente.');
-                if (!temperatureInput.checkValidity()) {
-                    temperatureInput.focus();
-                } else if (!locationInput.checkValidity()) {
-                    locationInput.focus();
-                }
+                console.error('Por favor, completa todos los campos correctamente.');
                 return;
             }
 
-            // Guardar los datos
             const temperature = temperatureInput.value;
             const location = locationInput.value;
             saveDataToLocalStorage(temperature, location);
 
-            // Limpiar formulario y establecer foco
             form.reset();
             temperatureInput.focus();
         });
 
-        // Guardar datos en Local Storage
         function saveDataToLocalStorage(temperature, location) {
             const storedData = JSON.parse(localStorage.getItem('records')) || [];
             storedData.push({ temperature, location, timestamp: new Date().toLocaleString() });
@@ -185,13 +285,12 @@
             loadStoredData();
         }
 
-        // Cargar datos almacenados
         function loadStoredData() {
             const storedData = JSON.parse(localStorage.getItem('records')) || [];
-            dataView.innerHTML = '<h2>Datos Registrados</h2>';
+            dataView.innerHTML = '<h2 class="data-view-title">Datos Registrados</h2>';
 
             if (storedData.length === 0) {
-                dataView.innerHTML += '<p>No hay datos registrados.</p>';
+                dataView.innerHTML += '<p class="text-gray-500">No hay datos registrados.</p>';
                 return;
             }
 
@@ -201,7 +300,7 @@
                 dataItem.innerHTML = `
                     <p><strong>${index + 1}. Temperatura:</strong> ${record.temperature}°C</p>
                     <p><strong>Ubicación:</strong> ${record.location}</p>
-                    <p><small>${record.timestamp}</small></p>
+                    <p><small class="text-xs text-gray-400">${record.timestamp}</small></p>
                 `;
                 dataView.appendChild(dataItem);
             });
