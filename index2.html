@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Endpoint Apps Script "/exec"</title>
+    <title>Prueba de Endpoint Apps Script Prueba de Endpoint Apps Script "setXFrameOptionsMode CORS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -26,7 +26,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             const statusDiv = document.getElementById('status-message');
             
-            // --- Pega la NUEVA URL de tu despliegue de Apps Script aquí ---
+            // --- URL de la implementación de tu script ---
+            // ¡Importante! La URL del modo de desarrollo (/dev) no permite CORS.
+            // Para la aplicación en producción, necesitas la URL de ejecución (/exec).
             const url = 'https://script.google.com/macros/s/AKfycbx0aUCDUEI-5IxCn2EMC8TtyXhB95xy47ReUaq0U6cSdrZvM5mq7ybqNHdgEFASDAne/exec'
             // -----------------------------------------------------------------
 
@@ -53,7 +55,7 @@
             fetch(url, opciones)
                 .then(respuesta => {
                     if (respuesta.ok) {
-                        return respuesta.json(); // Cambiado a .json() para manejar la respuesta JSON
+                        return respuesta.json(); 
                     }
                     throw new Error('Error en la solicitud: ' + respuesta.statusText);
                 })
