@@ -192,7 +192,7 @@
             document.getElementById('loading').style.display = 'block';
             
             // Construir la URL para la API (reemplaza [ID] con el ID real de tu API)
-            const apiUrl = `https://script.google.com/macros/s/AKfycbxNk7NfZPdhXfJfHsk1ipfRavlTPyoW44NmWB34S-uqcWBPZH9L106-G5xdaKbook2g/exec/temperaturas?action=create&temperatura=${temperatura}&localizacion=${encodeURIComponent(localizacion)}&fecha=${fecha}&hora=${hora}`;
+            const apiUrl = `https://script.google.com/macros/s/AKfycbwtSsOzNqkzoEn7Byn5ljBLzQrg-tEzWPF5xXkFSbKpCBp4t-pehdSWkMpIC9_OIiC3RQ/exec/temperaturas?action=create&temperatura=${temperatura}&localizacion=${encodeURIComponent(localizacion)}&fecha=${fecha}&hora=${hora}`;
             
             // Enviar datos a la API
             fetch(apiUrl, {
@@ -222,7 +222,7 @@
 
         function cargarRegistros() {
             // URL para obtener los registros (reemplaza [ID] con el ID real de tu API)
-            const apiUrl = 'https://script.google.com/macros/s/AKfycbxNk7NfZPdhXfJfHsk1ipfRavlTPyoW44NmWB34S-uqcWBPZH9L106-G5xdaKbook2g/exec/temperaturas?action=read';
+            const apiUrl = 'https://script.google.com/macros/s/AKfycbwtSsOzNqkzoEn7Byn5ljBLzQrg-tEzWPF5xXkFSbKpCBp4t-pehdSWkMpIC9_OIiC3RQ/exec/temperaturas?action=read';
             
             fetch(apiUrl)
             .then(response => {
