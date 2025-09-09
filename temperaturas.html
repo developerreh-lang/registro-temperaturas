@@ -3,258 +3,599 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[V2]Registro de Temperaturas</title>
+    <title>Registro de Temperaturas - API + LocalStorage</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
         }
-        h1 {
-            color: #2c3e50;
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
             text-align: center;
         }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        .content {
+            padding: 30px;
         }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
-            color: #34495e;
+            font-weight: 600;
+            color: #333;
         }
+
         input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
+            transition: border-color 0.3s;
         }
-        button:hover {
-            background-color: #2980b9;
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
             margin-top: 20px;
         }
-        th, td {
-            border: 1px solid #ddd;
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .status {
             padding: 10px;
-            text-align: left;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 600;
         }
-        th {
-            background-color: #f2f2f2;
-            color: #2c3e50;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .alert {
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            display: none;
-        }
-        .success {
-            background-color: #d4edda;
+
+        .status.success {
+            background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        .error {
-            background-color: #f8d7da;
+
+        .status.error {
+            background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        .loading {
-            text-align: center;
-            display: none;
-            margin: 20px 0;
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .records {
+            margin-top: 30px;
+        }
+
+        .record-item {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .record-info {
+            flex: 1;
+        }
+
+        .record-temp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .record-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .api-config {
+            background: #e8f4f8;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-left: 10px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Registro de Temperaturas</h1>
-        
-        <div id="alertSuccess" class="alert success"></div>
-        <div id="alertError" class="alert error"></div>
-        
-        <form id="temperatureForm">
-            <div class="form-group">
-                <label for="temperatura">Temperatura (°C)</label>
-                <input type="number" step="0.1" id="temperatura" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="localizacion">Localización</label>
-                <input type="text" id="localizacion" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="hora">Hora</label>
-                <input type="time" id="hora" required>
-            </div>
-            
-            <button type="submit">Registrar Temperatura</button>
-        </form>
-        
-        <div id="loading" class="loading">
-            <p>Enviando datos, por favor espere...</p>
+        <div class="header">
+            <h1>📊 Registro de Temperaturas</h1>
+            <p>API REST + LocalStorage Backup</p>
         </div>
-        
-        <h2>Registros Anteriores</h2>
-        <table id="recordsTable">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Temperatura</th>
-                    <th>Localización</th>
-                </tr>
-            </thead>
-            <tbody id="recordsBody">
-                <!-- Los registros se cargarán aquí -->
-            </tbody>
-        </table>
+
+        <div class="content">
+            <!-- Configuración de API -->
+            <div class="form-section api-config">
+                <h3>⚙️ Configuración de API</h3>
+                <div class="form-group">
+                    <label for="apiUrl">URL de la API:</label>
+                    <input type="url" id="apiUrl" placeholder="https://script.google.com/macros/s/TU_ID/exec">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Usar API REST:
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="useApi" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </label>
+                    <small>Si está desactivado o falla, se usará localStorage</small>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="testApiConnection()">🔍 Test API</button>
+            </div>
+
+            <!-- Formulario de registro -->
+            <div class="form-section">
+                <h3>📝 Registrar Nueva Temperatura</h3>
+                <form id="temperaturaForm">
+                    <div class="form-group">
+                        <label for="temperatura">Temperatura (°C):</label>
+                        <input type="number" id="temperatura" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="localizacion">Localización:</label>
+                        <select id="localizacion" required>
+                            <option value="">Seleccionar localización</option>
+                            <option value="Salón">Salón</option>
+                            <option value="Cocina">Cocina</option>
+                            <option value="Dormitorio">Dormitorio</option>
+                            <option value="Baño">Baño</option>
+                            <option value="Exterior">Exterior</option>
+                            <option value="Oficina">Oficina</option>
+                        </select>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">💾 Guardar Temperatura</button>
+                        <button type="button" class="btn btn-secondary" onclick="cargarDatos()">🔄 Actualizar Lista</button>
+                    </div>
+                </form>
+
+                <div id="status"></div>
+            </div>
+
+            <!-- Lista de registros -->
+            <div class="form-section">
+                <h3>📋 Registros Guardados</h3>
+                <div id="registros" class="records"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Establecer fecha y hora actual por defecto
-            const now = new Date();
-            document.getElementById('fecha').value = now.toISOString().split('T')[0];
-            document.getElementById('hora').value = now.toTimeString().substring(0, 5);
-            
-            // Cargar registros existentes
-            cargarRegistros();
-            
-            // Manejar el envío del formulario
-            document.getElementById('temperatureForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                registrarTemperatura();
-            });
-        });
+        // ========================================
+        // CONFIGURACIÓN Y VARIABLES GLOBALES
+        // ========================================
+        
+        const CONFIG = {
+            defaultApiUrl: 'https://script.google.com/macros/s/TU_SCRIPT_ID/exec',
+            localStorageKey: 'temperaturas',
+            timeout: 10000 // 10 segundos timeout
+        };
 
-        function mostrarAlerta(elemento, mensaje, esExito = true) {
-            elemento.textContent = mensaje;
-            elemento.style.display = 'block';
-            
-            if (esExito) {
-                elemento.className = 'alert success';
-            } else {
-                elemento.className = 'alert error';
+        // ========================================
+        // FUNCIONES DE API
+        // ========================================
+
+        async function callApi(endpoint, params = {}) {
+            const apiUrl = document.getElementById('apiUrl').value || CONFIG.defaultApiUrl;
+            const useApi = document.getElementById('useApi').checked;
+
+            if (!useApi) {
+                throw new Error('API deshabilitada por el usuario');
             }
+
+            if (!apiUrl || apiUrl === CONFIG.defaultApiUrl) {
+                throw new Error('URL de API no configurada');
+            }
+
+            // Construir URL completa
+            const url = new URL(endpoint, apiUrl.endsWith('/') ? apiUrl : apiUrl + '/');
             
-            // Ocultar la alerta después de 5 segundos
-            setTimeout(() => {
-                elemento.style.display = 'none';
-            }, 5000);
+            // Agregar parámetros query
+            Object.keys(params).forEach(key => {
+                if (params[key] !== null && params[key] !== undefined) {
+                    url.searchParams.append(key, params[key]);
+                }
+            });
+
+            console.log('🌐 Llamando API:', url.toString());
+
+            // Realizar petición con timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+
+            try {
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ Respuesta API:', data);
+                
+                return data;
+
+            } catch (error) {
+                clearTimeout(timeoutId);
+                console.error('❌ Error API:', error);
+                throw error;
+            }
         }
 
-        function registrarTemperatura() {
-            const temperatura = document.getElementById('temperatura').value;
-            const localizacion = document.getElementById('localizacion').value;
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora').value;
+        async function testApiConnection() {
+            showStatus('🔍 Probando conexión con API...', 'warning');
+
+            try {
+                const result = await callApi('test');
+                
+                if (result.success) {
+                    showStatus('✅ Conexión API exitosa: ' + result.message, 'success');
+                } else {
+                    showStatus('⚠️ API respondió pero con error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Error conectando con API: ' + error.message, 'error');
+            }
+        }
+
+        async function guardarEnApi(datos) {
+            const params = {
+                action: 'create',
+                temperatura: datos.temperatura,
+                localizacion: datos.localizacion,
+                fecha: datos.fecha,
+                hora: datos.hora
+            };
+
+            return await callApi('temperaturas', params);
+        }
+
+        async function cargarDesdeApi() {
+            return await callApi('temperaturas');
+        }
+
+        // ========================================
+        // FUNCIONES DE LOCALSTORAGE
+        // ========================================
+
+        function guardarEnLocalStorage(datos) {
+            try {
+                const registros = JSON.parse(localStorage.getItem(CONFIG.localStorageKey) || '[]');
+                registros.push({
+                    ...datos,
+                    id: Date.now().toString(),
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(registros));
+                return { success: true, message: 'Guardado en localStorage' };
+            } catch (error) {
+                throw new Error('Error guardando en localStorage: ' + error.message);
+            }
+        }
+
+        function cargarDesdeLocalStorage() {
+            try {
+                const registros = JSON.parse(localStorage.getItem(CONFIG.localStorageKey) || '[]');
+                return {
+                    success: true,
+                    data: registros.sort((a, b) => new Date(b.timestamp || b.fecha) - new Date(a.timestamp || a.fecha))
+                };
+            } catch (error) {
+                throw new Error('Error cargando de localStorage: ' + error.message);
+            }
+        }
+
+        // ========================================
+        // FUNCIONES PRINCIPALES
+        // ========================================
+
+        async function guardarTemperatura(datos) {
+            const useApi = document.getElementById('useApi').checked;
+            let apiSuccess = false;
+            let localSuccess = false;
+
+            // Intentar guardar en API primero
+            if (useApi) {
+                try {
+                    showStatus('🌐 Guardando en API...', 'warning');
+                    const result = await guardarEnApi(datos);
+                    
+                    if (result.success) {
+                        showStatus('✅ Guardado en API exitosamente', 'success');
+                        apiSuccess = true;
+                    } else {
+                        throw new Error(result.message || 'Error desconocido de API');
+                    }
+                } catch (error) {
+                    console.error('Error API:', error);
+                    showStatus('⚠️ Fallo API, intentando localStorage: ' + error.message, 'warning');
+                }
+            }
+
+            // Guardar en localStorage como backup o método principal
+            if (!apiSuccess) {
+                try {
+                    const result = guardarEnLocalStorage(datos);
+                    showStatus('💾 ' + result.message + ' (backup)', 'success');
+                    localSuccess = true;
+                } catch (error) {
+                    console.error('Error localStorage:', error);
+                    showStatus('❌ Error total: ' + error.message, 'error');
+                    return false;
+                }
+            }
+
+            return apiSuccess || localSuccess;
+        }
+
+        async function cargarDatos() {
+            const useApi = document.getElementById('useApi').checked;
+            let datos = [];
+
+            // Intentar cargar de API primero
+            if (useApi) {
+                try {
+                    showStatus('🌐 Cargando desde API...', 'warning');
+                    const result = await cargarDesdeApi();
+                    
+                    if (result.success && result.data) {
+                        datos = result.data;
+                        showStatus('✅ Datos cargados desde API', 'success');
+                    } else {
+                        throw new Error('API no devolvió datos válidos');
+                    }
+                } catch (error) {
+                    console.error('Error cargando de API:', error);
+                    showStatus('⚠️ Fallo API, cargando localStorage', 'warning');
+                }
+            }
+
+            // Cargar de localStorage si API falló o está deshabilitada
+            if (datos.length === 0) {
+                try {
+                    const result = cargarDesdeLocalStorage();
+                    if (result.success) {
+                        datos = result.data;
+                        showStatus('💾 Datos cargados desde localStorage', 'success');
+                    }
+                } catch (error) {
+                    console.error('Error localStorage:', error);
+                    showStatus('❌ Error cargando datos: ' + error.message, 'error');
+                }
+            }
+
+            mostrarRegistros(datos);
+        }
+
+        // ========================================
+        // FUNCIONES DE UI
+        // ========================================
+
+        function showStatus(message, type = 'success') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
             
-            // Validar los datos
-            if (!temperatura || !localizacion || !fecha || !hora) {
-                mostrarAlerta(document.getElementById('alertError'), 'Por favor, complete todos los campos.', false);
+            // Auto-ocultar después de 5 segundos para mensajes de éxito
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusDiv.textContent = '';
+                    statusDiv.className = '';
+                }, 5000);
+            }
+        }
+
+        function mostrarRegistros(registros) {
+            const container = document.getElementById('registros');
+            
+            if (!registros || registros.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No hay registros guardados</p>';
                 return;
             }
+
+            const html = registros.map(registro => `
+                <div class="record-item">
+                    <div class="record-info">
+                        <div class="record-temp">${registro.temperatura}°C</div>
+                        <div class="record-details">
+                            📍 ${registro.localizacion} • 
+                            📅 ${registro.fecha} • 
+                            🕐 ${registro.hora}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = html;
+        }
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+
+        document.getElementById('temperaturaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Mostrar indicador de carga
-            document.getElementById('loading').style.display = 'block';
+            const temperatura = parseFloat(document.getElementById('temperatura').value);
+            const localizacion = document.getElementById('localizacion').value;
             
-            // Construir la URL para la API (reemplaza [ID] con el ID real de tu API)
-            const apiUrl = `https://script.google.com/macros/s/AKfycbwtSsOzNqkzoEn7Byn5ljBLzQrg-tEzWPF5xXkFSbKpCBp4t-pehdSWkMpIC9_OIiC3RQ/exec/temperaturas?action=create&temperatura=${temperatura}&localizacion=${encodeURIComponent(localizacion)}&fecha=${fecha}&hora=${hora}`;
+            if (!temperatura || !localizacion) {
+                showStatus('❌ Por favor complete todos los campos', 'error');
+                return;
+            }
+
+            const ahora = new Date();
+            const datos = {
+                temperatura: temperatura,
+                localizacion: localizacion,
+                fecha: ahora.toISOString().split('T')[0],
+                hora: ahora.toTimeString().split(' ')[0].substring(0, 5)
+            };
+
+            const success = await guardarTemperatura(datos);
             
-            // Enviar datos a la API
-            fetch(apiUrl, {
-                method: 'GET', // O 'POST' si tu API lo requiere
-                mode: 'no-cors' // Modo no-cors para APIs que no envían headers CORS
-            })
-            .then(() => {
-                // Como no-cors no permite leer la respuesta, asumimos éxito
-                mostrarAlerta(document.getElementById('alertSuccess'), 'Temperatura registrada con éxito!');
-                
-                // Limpiar formulario (excepto fecha y hora)
+            if (success) {
+                // Limpiar formulario
                 document.getElementById('temperatura').value = '';
                 document.getElementById('localizacion').value = '';
                 
-                // Recargar la tabla de registros
-                cargarRegistros();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                mostrarAlerta(document.getElementById('alertError'), 'Error al registrar la temperatura. Por favor, intente nuevamente.', false);
-            })
-            .finally(() => {
-                // Ocultar indicador de carga
-                document.getElementById('loading').style.display = 'none';
-            });
-        }
+                // Recargar lista
+                setTimeout(() => cargarDatos(), 1000);
+            }
+        });
 
-        function cargarRegistros() {
-            // URL para obtener los registros (reemplaza [ID] con el ID real de tu API)
-            const apiUrl = 'https://script.google.com/macros/s/AKfycbwtSsOzNqkzoEn7Byn5ljBLzQrg-tEzWPF5xXkFSbKpCBp4t-pehdSWkMpIC9_OIiC3RQ/exec/temperaturas?action=read';
-            
-            fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al cargar los registros');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const tbody = document.getElementById('recordsBody');
-                tbody.innerHTML = '';
-                
-                if (data && data.length > 0) {
-                    data.forEach(registro => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${registro.fecha}</td>
-                            <td>${registro.hora}</td>
-                            <td>${registro.temperatura}°C</td>
-                            <td>${registro.localizacion}</td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No hay registros disponibles</td></tr>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('recordsBody').innerHTML = '<tr><td colspan="4" style="text-align: center;">Error al cargar los registros</td></tr>';
+        // ========================================
+        // INICIALIZACIÓN
+        // ========================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar URL guardada
+            const savedUrl = localStorage.getItem('apiUrl');
+            if (savedUrl) {
+                document.getElementById('apiUrl').value = savedUrl;
+            }
+
+            // Guardar URL cuando cambie
+            document.getElementById('apiUrl').addEventListener('change', function() {
+                localStorage.setItem('apiUrl', this.value);
             });
-        }
+
+            // Cargar datos iniciales
+            cargarDatos();
+            
+            console.log('🚀 Aplicación inicializada');
+        });
+
+        console.log('📊 Sistema de temperaturas cargado - API + localStorage');
     </script>
 </body>
 </html>
