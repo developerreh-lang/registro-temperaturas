@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Temperaturas - API + LocalStorage</title>
+    <title>Registro de Temperaturas - API Parameters Only</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -34,6 +34,11 @@
             text-align: center;
         }
 
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
         .content {
             padding: 30px;
         }
@@ -46,8 +51,21 @@
             background: #f9f9f9;
         }
 
+        .form-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
         .form-group {
             margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
         label {
@@ -57,7 +75,7 @@
             color: #333;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #ddd;
@@ -66,26 +84,28 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .btn-group {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            flex: 1;
-            padding: 12px;
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
         }
 
         .btn-primary {
@@ -98,16 +118,27 @@
             color: white;
         }
 
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .status {
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
-            margin: 10px 0;
+            margin: 15px 0;
             font-weight: 600;
+            word-wrap: break-word;
         }
 
         .status.success {
@@ -126,45 +157,6 @@
             background: #fff3cd;
             color: #856404;
             border: 1px solid #ffeaa7;
-        }
-
-        .records {
-            margin-top: 30px;
-        }
-
-        .record-item {
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .record-info {
-            flex: 1;
-        }
-
-        .record-temp {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .record-details {
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .api-config {
-            background: #e8f4f8;
-            border: 1px solid #bee5eb;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
         }
 
         .toggle-switch {
@@ -212,23 +204,117 @@
         input:checked + .slider:before {
             transform: translateX(26px);
         }
+
+        .records {
+            margin-top: 20px;
+        }
+
+        .record-item {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .record-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .record-temp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .record-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .api-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .api-status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .api-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                flex: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Registro de Temperaturas</h1>
-            <p>API REST + LocalStorage Backup</p>
+            <h1>🌡️ Registro de Temperaturas</h1>
+            <p>API Google Apps Script - Solo Parámetros</p>
+            <div id="apiStatus" class="api-status offline">API: Desconectada</div>
         </div>
 
         <div class="content">
             <!-- Configuración de API -->
-            <div class="form-section api-config">
+            <div class="form-section">
                 <h3>⚙️ Configuración de API</h3>
                 <div class="form-group">
-                    <label for="apiUrl">URL de la API:</label>
-                    <input type="url" id="apiUrl" placeholder="https://script.google.com/macros/s/TU_ID/exec">
+                    <label for="apiUrl">URL de la API Google Apps Script:</label>
+                    <input type="url" id="apiUrl" placeholder="https://script.google.com/macros/s/TU_SCRIPT_ID/exec">
+                    <small style="color: #666;">Pega aquí la URL de tu implementación de Google Apps Script</small>
                 </div>
+                
                 <div class="form-group">
                     <label>
                         Usar API REST:
@@ -237,31 +323,44 @@
                             <span class="slider"></span>
                         </div>
                     </label>
-                    <small>Si está desactivado o falla, se usará localStorage</small>
+                    <small>Si está desactivado o falla, se usará localStorage como backup</small>
                 </div>
-                <button type="button" class="btn btn-secondary" onclick="testApiConnection()">🔍 Test API</button>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" onclick="testApiConnection()">🔍 Test API</button>
+                    <button type="button" class="btn btn-secondary" onclick="getApiStats()">📊 Estadísticas</button>
+                </div>
             </div>
 
             <!-- Formulario de registro -->
             <div class="form-section">
                 <h3>📝 Registrar Nueva Temperatura</h3>
                 <form id="temperaturaForm">
-                    <div class="form-group">
-                        <label for="temperatura">Temperatura (°C):</label>
-                        <input type="number" id="temperatura" step="0.1" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="temperatura">Temperatura (°C):</label>
+                            <input type="number" id="temperatura" step="0.1" min="-50" max="60" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="localizacion">Localización:</label>
+                            <select id="localizacion" required>
+                                <option value="">Seleccionar localización</option>
+                                <option value="Salón">Salón</option>
+                                <option value="Cocina">Cocina</option>
+                                <option value="Dormitorio">Dormitorio</option>
+                                <option value="Baño">Baño</option>
+                                <option value="Exterior">Exterior</option>
+                                <option value="Oficina">Oficina</option>
+                                <option value="Sótano">Sótano</option>
+                                <option value="Ático">Ático</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="localizacion">Localización:</label>
-                        <select id="localizacion" required>
-                            <option value="">Seleccionar localización</option>
-                            <option value="Salón">Salón</option>
-                            <option value="Cocina">Cocina</option>
-                            <option value="Dormitorio">Dormitorio</option>
-                            <option value="Baño">Baño</option>
-                            <option value="Exterior">Exterior</option>
-                            <option value="Oficina">Oficina</option>
-                        </select>
+                        <label for="notas">Notas (opcional):</label>
+                        <textarea id="notas" rows="2" placeholder="Observaciones adicionales..."></textarea>
                     </div>
 
                     <div class="btn-group">
@@ -273,9 +372,41 @@
                 <div id="status"></div>
             </div>
 
+            <!-- Filtros -->
+            <div class="form-section">
+                <h3>🔍 Filtros</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="filtroLocalizacion">Filtrar por localización:</label>
+                        <select id="filtroLocalizacion">
+                            <option value="">Todas las localizaciones</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filtroFecha">Filtrar por fecha:</label>
+                        <input type="date" id="filtroFecha">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success" onclick="aplicarFiltros()">🔍 Aplicar Filtros</button>
+                    <button type="button" class="btn btn-secondary" onclick="limpiarFiltros()">🧹 Limpiar</button>
+                </div>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="form-section" id="statsSection" style="display: none;">
+                <h3>📊 Estadísticas</h3>
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Se llenan dinámicamente -->
+                </div>
+            </div>
+
             <!-- Lista de registros -->
             <div class="form-section">
                 <h3>📋 Registros Guardados</h3>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" onclick="toggleStats()">📊 Ver/Ocultar Stats</button>
+                </div>
                 <div id="registros" class="records"></div>
             </div>
         </div>
@@ -283,44 +414,43 @@
 
     <script>
         // ========================================
-        // CONFIGURACIÓN Y VARIABLES GLOBALES
+        // CONFIGURACIÓN GLOBAL
         // ========================================
         
         const CONFIG = {
-            defaultApiUrl: 'https://script.google.com/macros/s/TU_SCRIPT_ID/exec',
             localStorageKey: 'temperaturas',
-            timeout: 10000 // 10 segundos timeout
+            apiUrlKey: 'apiUrl',
+            timeout: 15000
         };
 
+        let apiStatus = false;
+
         // ========================================
-        // FUNCIONES DE API
+        // FUNCIONES DE API (SOLO PARÁMETROS)
         // ========================================
 
-        async function callApi(endpoint, params = {}) {
-            const apiUrl = document.getElementById('apiUrl').value || CONFIG.defaultApiUrl;
+        async function callApi(params = {}) {
+            const apiUrl = document.getElementById('apiUrl').value.trim();
             const useApi = document.getElementById('useApi').checked;
 
             if (!useApi) {
                 throw new Error('API deshabilitada por el usuario');
             }
 
-            if (!apiUrl || apiUrl === CONFIG.defaultApiUrl) {
+            if (!apiUrl) {
                 throw new Error('URL de API no configurada');
             }
 
-            // Construir URL completa
-            const url = new URL(endpoint, apiUrl.endsWith('/') ? apiUrl : apiUrl + '/');
-            
-            // Agregar parámetros query
+            // Construir URL con parámetros
+            const url = new URL(apiUrl);
             Object.keys(params).forEach(key => {
-                if (params[key] !== null && params[key] !== undefined) {
+                if (params[key] !== null && params[key] !== undefined && params[key] !== '') {
                     url.searchParams.append(key, params[key]);
                 }
             });
 
-            console.log('🌐 Llamando API:', url.toString());
+            console.log('🌐 API Call:', url.toString());
 
-            // Realizar petición con timeout
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
 
@@ -340,13 +470,15 @@
                 }
 
                 const data = await response.json();
-                console.log('✅ Respuesta API:', data);
+                console.log('✅ API Response:', data);
                 
+                updateApiStatus(true);
                 return data;
 
             } catch (error) {
                 clearTimeout(timeoutId);
-                console.error('❌ Error API:', error);
+                console.error('❌ API Error:', error);
+                updateApiStatus(false);
                 throw error;
             }
         }
@@ -355,32 +487,78 @@
             showStatus('🔍 Probando conexión con API...', 'warning');
 
             try {
-                const result = await callApi('test');
+                const result = await callApi({ action: 'test' });
                 
                 if (result.success) {
-                    showStatus('✅ Conexión API exitosa: ' + result.message, 'success');
+                    showStatus(`✅ API conectada exitosamente: ${result.message}`, 'success');
+                    updateApiStatus(true);
                 } else {
-                    showStatus('⚠️ API respondió pero con error: ' + result.message, 'error');
+                    showStatus(`⚠️ API respondió con error: ${result.message}`, 'error');
+                    updateApiStatus(false);
                 }
             } catch (error) {
-                showStatus('❌ Error conectando con API: ' + error.message, 'error');
+                showStatus(`❌ Error conectando con API: ${error.message}`, 'error');
+                updateApiStatus(false);
             }
         }
 
         async function guardarEnApi(datos) {
             const params = {
+                resource: 'temperaturas',
                 action: 'create',
                 temperatura: datos.temperatura,
                 localizacion: datos.localizacion,
                 fecha: datos.fecha,
-                hora: datos.hora
+                hora: datos.hora,
+                notas: datos.notas || ''
             };
 
-            return await callApi('temperaturas', params);
+            return await callApi(params);
         }
 
-        async function cargarDesdeApi() {
-            return await callApi('temperaturas');
+        async function cargarDesdeApi(filtros = {}) {
+            const params = {
+                resource: 'temperaturas',
+                action: 'list',
+                ...filtros
+            };
+
+            return await callApi(params);
+        }
+
+        async function getApiStats() {
+            showStatus('📊 Obteniendo estadísticas...', 'warning');
+
+            try {
+                const result = await callApi({
+                    resource: 'temperaturas',
+                    action: 'stats'
+                });
+                
+                if (result.success) {
+                    mostrarEstadisticas(result.data);
+                    showStatus('✅ Estadísticas cargadas', 'success');
+                } else {
+                    showStatus(`❌ Error obteniendo estadísticas: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function cargarLocalizacionesApi() {
+            try {
+                const result = await callApi({
+                    resource: 'localizaciones',
+                    action: 'list'
+                });
+                
+                if (result.success && result.data) {
+                    actualizarSelectLocalizaciones(result.data);
+                }
+            } catch (error) {
+                console.log('No se pudieron cargar localizaciones de API:', error.message);
+            }
         }
 
         // ========================================
@@ -390,25 +568,40 @@
         function guardarEnLocalStorage(datos) {
             try {
                 const registros = JSON.parse(localStorage.getItem(CONFIG.localStorageKey) || '[]');
-                registros.push({
+                const nuevoRegistro = {
                     ...datos,
-                    id: Date.now().toString(),
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
                     timestamp: new Date().toISOString()
-                });
+                };
+                
+                registros.push(nuevoRegistro);
                 localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(registros));
-                return { success: true, message: 'Guardado en localStorage' };
+                
+                return { success: true, message: 'Guardado en localStorage', data: nuevoRegistro };
             } catch (error) {
                 throw new Error('Error guardando en localStorage: ' + error.message);
             }
         }
 
-        function cargarDesdeLocalStorage() {
+        function cargarDesdeLocalStorage(filtros = {}) {
             try {
-                const registros = JSON.parse(localStorage.getItem(CONFIG.localStorageKey) || '[]');
-                return {
-                    success: true,
-                    data: registros.sort((a, b) => new Date(b.timestamp || b.fecha) - new Date(a.timestamp || a.fecha))
-                };
+                let registros = JSON.parse(localStorage.getItem(CONFIG.localStorageKey) || '[]');
+                
+                // Aplicar filtros
+                if (filtros.localizacion) {
+                    registros = registros.filter(r => 
+                        r.localizacion && r.localizacion.toLowerCase().includes(filtros.localizacion.toLowerCase())
+                    );
+                }
+                
+                if (filtros.fecha) {
+                    registros = registros.filter(r => r.fecha === filtros.fecha);
+                }
+                
+                // Ordenar por timestamp descendente
+                registros.sort((a, b) => new Date(b.timestamp || b.fecha) - new Date(a.timestamp || a.fecha));
+                
+                return { success: true, data: registros };
             } catch (error) {
                 throw new Error('Error cargando de localStorage: ' + error.message);
             }
@@ -421,55 +614,54 @@
         async function guardarTemperatura(datos) {
             const useApi = document.getElementById('useApi').checked;
             let apiSuccess = false;
-            let localSuccess = false;
 
-            // Intentar guardar en API primero
+            // Intentar API primero
             if (useApi) {
                 try {
                     showStatus('🌐 Guardando en API...', 'warning');
                     const result = await guardarEnApi(datos);
                     
                     if (result.success) {
-                        showStatus('✅ Guardado en API exitosamente', 'success');
+                        showStatus('✅ Temperatura guardada en API exitosamente', 'success');
                         apiSuccess = true;
+                        return true;
                     } else {
                         throw new Error(result.message || 'Error desconocido de API');
                     }
                 } catch (error) {
                     console.error('Error API:', error);
-                    showStatus('⚠️ Fallo API, intentando localStorage: ' + error.message, 'warning');
+                    showStatus(`⚠️ Fallo API, usando localStorage: ${error.message}`, 'warning');
                 }
             }
 
-            // Guardar en localStorage como backup o método principal
+            // Fallback a localStorage
             if (!apiSuccess) {
                 try {
                     const result = guardarEnLocalStorage(datos);
-                    showStatus('💾 ' + result.message + ' (backup)', 'success');
-                    localSuccess = true;
+                    showStatus(`💾 ${result.message}`, 'success');
+                    return true;
                 } catch (error) {
-                    console.error('Error localStorage:', error);
-                    showStatus('❌ Error total: ' + error.message, 'error');
+                    showStatus(`❌ Error total: ${error.message}`, 'error');
                     return false;
                 }
             }
 
-            return apiSuccess || localSuccess;
+            return apiSuccess;
         }
 
-        async function cargarDatos() {
+        async function cargarDatos(filtros = {}) {
             const useApi = document.getElementById('useApi').checked;
             let datos = [];
 
-            // Intentar cargar de API primero
+            // Intentar API primero
             if (useApi) {
                 try {
                     showStatus('🌐 Cargando desde API...', 'warning');
-                    const result = await cargarDesdeApi();
+                    const result = await cargarDesdeApi(filtros);
                     
                     if (result.success && result.data) {
                         datos = result.data;
-                        showStatus('✅ Datos cargados desde API', 'success');
+                        showStatus(`✅ ${result.message || 'Datos cargados desde API'}`, 'success');
                     } else {
                         throw new Error('API no devolvió datos válidos');
                     }
@@ -479,21 +671,25 @@
                 }
             }
 
-            // Cargar de localStorage si API falló o está deshabilitada
+            // Fallback a localStorage
             if (datos.length === 0) {
                 try {
-                    const result = cargarDesdeLocalStorage();
+                    const result = cargarDesdeLocalStorage(filtros);
                     if (result.success) {
                         datos = result.data;
                         showStatus('💾 Datos cargados desde localStorage', 'success');
                     }
                 } catch (error) {
-                    console.error('Error localStorage:', error);
-                    showStatus('❌ Error cargando datos: ' + error.message, 'error');
+                    showStatus(`❌ Error cargando datos: ${error.message}`, 'error');
                 }
             }
 
             mostrarRegistros(datos);
+            
+            // Cargar localizaciones para filtros
+            if (useApi) {
+                await cargarLocalizacionesApi();
+            }
         }
 
         // ========================================
@@ -505,7 +701,7 @@
             statusDiv.className = `status ${type}`;
             statusDiv.textContent = message;
             
-            // Auto-ocultar después de 5 segundos para mensajes de éxito
+            // Auto-ocultar mensajes de éxito
             if (type === 'success') {
                 setTimeout(() => {
                     statusDiv.textContent = '';
@@ -514,28 +710,139 @@
             }
         }
 
+        function updateApiStatus(online) {
+            apiStatus = online;
+            const statusEl = document.getElementById('apiStatus');
+            
+            if (online) {
+                statusEl.textContent = 'API: Conectada';
+                statusEl.className = 'api-status online';
+            } else {
+                statusEl.textContent = 'API: Desconectada';
+                statusEl.className = 'api-status offline';
+            }
+        }
+
         function mostrarRegistros(registros) {
             const container = document.getElementById('registros');
             
             if (!registros || registros.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #666;">No hay registros guardados</p>';
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No hay registros que mostrar</p>';
                 return;
             }
 
-            const html = registros.map(registro => `
-                <div class="record-item">
-                    <div class="record-info">
-                        <div class="record-temp">${registro.temperatura}°C</div>
-                        <div class="record-details">
-                            📍 ${registro.localizacion} • 
-                            📅 ${registro.fecha} • 
-                            🕐 ${registro.hora}
+            const html = registros.map(registro => {
+                const temp = parseFloat(registro.temperatura);
+                const tempColor = temp < 18 ? '#007bff' : temp > 25 ? '#dc3545' : '#28a745';
+                
+                return `
+                    <div class="record-item">
+                        <div class="record-info">
+                            <div class="record-temp" style="color: ${tempColor}">${temp}°C</div>
+                            <div class="record-details">
+                                📍 ${registro.localizacion} • 
+                                📅 ${registro.fecha} • 
+                                🕐 ${registro.hora}
+                                ${registro.notas ? '<br>📝 ' + registro.notas : ''}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
 
             container.innerHTML = html;
+        }
+
+        function mostrarEstadisticas(stats) {
+            const statsSection = document.getElementById('statsSection');
+            const statsGrid = document.getElementById('statsGrid');
+            
+            if (!stats) {
+                statsSection.style.display = 'none';
+                return;
+            }
+            
+            const html = `
+                <div class="stat-card">
+                    <div class="stat-value">${stats.total}</div>
+                    <div class="stat-label">Total Registros</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.temperaturas.promedio}°C</div>
+                    <div class="stat-label">Temperatura Promedio</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.temperaturas.minima}°C</div>
+                    <div class="stat-label">Temperatura Mínima</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.temperaturas.maxima}°C</div>
+                    <div class="stat-label">Temperatura Máxima</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.localizaciones.total}</div>
+                    <div class="stat-label">Localizaciones</div>
+                </div>
+            `;
+            
+            statsGrid.innerHTML = html;
+            statsSection.style.display = 'block';
+        }
+
+        function actualizarSelectLocalizaciones(localizaciones) {
+            const select = document.getElementById('filtroLocalizacion');
+            const currentValue = select.value;
+            
+            // Limpiar opciones actuales excepto la primera
+            while (select.children.length > 1) {
+                select.removeChild(select.lastChild);
+            }
+            
+            // Agregar localizaciones de la API
+            if (localizaciones && localizaciones.length > 0) {
+                localizaciones.forEach(loc => {
+                    const option = document.createElement('option');
+                    option.value = loc.nombre;
+                    option.textContent = `${loc.nombre} (${loc.registros})`;
+                    select.appendChild(option);
+                });
+            }
+            
+            // Restaurar valor si existe
+            if (currentValue) {
+                select.value = currentValue;
+            }
+        }
+
+        // ========================================
+        // FUNCIONES DE FILTROS
+        // ========================================
+
+        async function aplicarFiltros() {
+            const filtros = {};
+            
+            const localizacion = document.getElementById('filtroLocalizacion').value;
+            const fecha = document.getElementById('filtroFecha').value;
+            
+            if (localizacion) filtros.localizacion = localizacion;
+            if (fecha) filtros.fecha = fecha;
+            
+            await cargarDatos(filtros);
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('filtroLocalizacion').value = '';
+            document.getElementById('filtroFecha').value = '';
+            cargarDatos();
+        }
+
+        function toggleStats() {
+            const statsSection = document.getElementById('statsSection');
+            if (statsSection.style.display === 'none') {
+                getApiStats();
+            } else {
+                statsSection.style.display = 'none';
+            }
         }
 
         // ========================================
@@ -547,9 +854,10 @@
             
             const temperatura = parseFloat(document.getElementById('temperatura').value);
             const localizacion = document.getElementById('localizacion').value;
+            const notas = document.getElementById('notas').value.trim();
             
             if (!temperatura || !localizacion) {
-                showStatus('❌ Por favor complete todos los campos', 'error');
+                showStatus('❌ Por favor complete los campos obligatorios', 'error');
                 return;
             }
 
@@ -558,7 +866,8 @@
                 temperatura: temperatura,
                 localizacion: localizacion,
                 fecha: ahora.toISOString().split('T')[0],
-                hora: ahora.toTimeString().split(' ')[0].substring(0, 5)
+                hora: ahora.toTimeString().split(' ')[0].substring(0, 5),
+                notas: notas
             };
 
             const success = await guardarTemperatura(datos);
@@ -567,9 +876,10 @@
                 // Limpiar formulario
                 document.getElementById('temperatura').value = '';
                 document.getElementById('localizacion').value = '';
+                document.getElementById('notas').value = '';
                 
-                // Recargar lista
-                setTimeout(() => cargarDatos(), 1000);
+                // Recargar lista después de un momento
+                setTimeout(() => cargarDatos(), 1500);
             }
         });
 
@@ -578,24 +888,32 @@
         // ========================================
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Cargar URL guardada
-            const savedUrl = localStorage.getItem('apiUrl');
+            // Cargar configuración guardada
+            const savedUrl = localStorage.getItem(CONFIG.apiUrlKey);
             if (savedUrl) {
                 document.getElementById('apiUrl').value = savedUrl;
             }
 
             // Guardar URL cuando cambie
             document.getElementById('apiUrl').addEventListener('change', function() {
-                localStorage.setItem('apiUrl', this.value);
+                localStorage.setItem(CONFIG.apiUrlKey, this.value);
+                updateApiStatus(false); // Reset status cuando cambia URL
             });
 
             // Cargar datos iniciales
             cargarDatos();
             
-            console.log('🚀 Aplicación inicializada');
+            console.log('🚀 Aplicación inicializada - Modo solo parámetros');
         });
 
-        console.log('📊 Sistema de temperaturas cargado - API + localStorage');
+        // Funciones globales para botones
+        window.testApiConnection = testApiConnection;
+        window.getApiStats = getApiStats;
+        window.cargarDatos = cargarDatos;
+        window.aplicarFiltros = aplicarFiltros;
+        window.limpiarFiltros = limpiarFiltros;
+        window.toggleStats = toggleStats;
+
     </script>
 </body>
 </html>
