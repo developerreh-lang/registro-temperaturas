@@ -1,0 +1,60 @@
+{
+    "planes": [
+        {
+            "dia": "2025-10-01",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-005" },
+                { "descripcion": "Comida", "id_receta": "receta-001" },
+                { "descripcion": "Cena", "id_receta": "receta-003" }
+            ]
+        },
+        {
+            "dia": "2025-10-02",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-007" },
+                { "descripcion": "Comida", "id_receta": "receta-002" },
+                { "descripcion": "Cena", "id_receta": "receta-001" }
+            ]
+        },
+        {
+            "dia": "2025-10-03",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-006" },
+                { "descripcion": "Comida", "id_receta": "receta-004" },
+                { "descripcion": "Cena", "id_receta": "receta-002" }
+            ]
+        },
+        {
+            "dia": "2025-10-04",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-005" },
+                { "descripcion": "Comida", "id_receta": "receta-001" },
+                { "descripcion": "Cena", "id_receta": "receta-004" }
+            ]
+        },
+        {
+            "dia": "2025-10-05",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-006" },
+                { "descripcion": "Comida", "id_receta": "receta-002" },
+                { "descripcion": "Cena", "id_receta": "receta-003" }
+            ]
+        },
+        {
+            "dia": "2025-10-06",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-007" },
+                { "descripcion": "Comida", "id_receta": "receta-004" },
+                { "descripcion": "Cena", "id_receta": "receta-001" }
+            ]
+        },
+        {
+            "dia": "2025-10-07",
+            "comida": [
+                { "descripcion": "Desayuno", "id_receta": "receta-005" },
+                { "descripcion": "Comida", "id_receta": "receta-002" },
+                { "descripcion": "Cena", "id_receta": "receta-004" }
+            ]
+        }
+    ]
+}
