@@ -1,0 +1,268 @@
+{
+    "recetas": [
+        {
+            "id": "receta-001",
+            "descripcion": "Crema de Calabaza y Coliflor (C)",
+            "tiempo_preparacion": "00:20:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Calabaza (troceada)",
+                    "cantidad": 500,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.80 }
+                },
+                {
+                    "descripcion": "Coliflor (floretes)",
+                    "cantidad": 300,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.10 }
+                },
+                {
+                    "descripcion": "Cebolla",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.50 }
+                },
+                {
+                    "descripcion": "Caldo de verduras bajo en sodio",
+                    "cantidad": 500,
+                    "unidad": "ml",
+                    "coste": { "estimado_eur_kg": 0.30 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Sofreír la cebolla picada en una olla grande." },
+                { "descripcion": "Añadir la calabaza y la coliflor. Cubrir con el caldo y cocinar a fuego medio hasta que las verduras estén tiernas (aprox. 15 minutos)." },
+                { "descripcion": "Triturar hasta obtener una crema suave. Ajustar sal y pimienta." }
+            ],
+            "presentacion": "Servir caliente o congelar en porciones una vez fría. Apta para diabéticos, bajo en carbohidratos."
+        },
+        {
+            "id": "receta-002",
+            "descripcion": "Salteado de Pollo y Brócoli con Especias (C)",
+            "tiempo_preparacion": "00:15:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Pechuga de pollo (en tiras)",
+                    "cantidad": 600,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 4.50 }
+                },
+                {
+                    "descripcion": "Brócoli (floretes)",
+                    "cantidad": 400,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.50 }
+                },
+                {
+                    "descripcion": "Pimiento rojo (en tiras)",
+                    "cantidad": 200,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.80 }
+                },
+                {
+                    "descripcion": "Cebolla (en juliana)",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.50 }
+                },
+                {
+                    "descripcion": "Aceite de oliva, comino, pimentón dulce",
+                    "cantidad": 1,
+                    "unidad": "racion",
+                    "coste": { "estimado_eur_kg": 0.10 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Saltear el pollo en la sartén con un poco de aceite de oliva hasta que esté dorado." },
+                { "descripcion": "Añadir la cebolla y el pimiento, cocinar 5 minutos. Incorporar el brócoli y las especias." },
+                { "descripcion": "Tapar y cocinar a fuego lento 5-7 minutos hasta que el brócoli esté al dente." }
+            ],
+            "presentacion": "Ideal para congelar. Servir con una porción pequeña de arroz integral o quinua (no incluida en la receta para mantenerla simple)."
+        },
+        {
+            "id": "receta-003",
+            "descripcion": "Tortilla Española de Calabacín y Cebolla (R)",
+            "tiempo_preparacion": "00:25:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Calabacín (en rodajas finas)",
+                    "cantidad": 500,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.90 }
+                },
+                {
+                    "descripcion": "Cebolla (en juliana)",
+                    "cantidad": 150,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.50 }
+                },
+                {
+                    "descripcion": "Huevos",
+                    "cantidad": 6,
+                    "unidad": "unidad",
+                    "coste": { "estimado_eur_kg": 0.15 }
+                },
+                {
+                    "descripcion": "Aceite de oliva y sal",
+                    "cantidad": 1,
+                    "unidad": "racion",
+                    "coste": { "estimado_eur_kg": 0.05 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Pochar el calabacín y la cebolla en aceite de oliva a fuego bajo hasta que estén blandos. Escurrir bien el exceso de aceite." },
+                { "descripcion": "Batir los huevos con un poco de sal. Incorporar las verduras pochadas." },
+                { "descripcion": "Cuajar en una sartén antiadherente por ambos lados." }
+            ],
+            "presentacion": "Se puede comer fría o caliente. Es una opción rápida para la cena. Controlar la porción de huevo."
+        },
+        {
+            "id": "receta-004",
+            "descripcion": "Lentejas Guisadas con Verduras (C)",
+            "tiempo_preparacion": "00:40:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Lentejas Pardinas",
+                    "cantidad": 400,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.50 }
+                },
+                {
+                    "descripcion": "Zanahoria (troceada)",
+                    "cantidad": 150,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.60 }
+                },
+                {
+                    "descripcion": "Puerro (troceado)",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.20 }
+                },
+                {
+                    "descripcion": "Patata (en cubos pequeños, opcional)",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 0.40 }
+                },
+                {
+                    "descripcion": "Caldo de pollo o verduras bajo en sodio",
+                    "cantidad": 1000,
+                    "unidad": "ml",
+                    "coste": { "estimado_eur_kg": 0.30 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "En una olla, sofreír el puerro y la zanahoria." },
+                { "descripcion": "Añadir las lentejas (previamente remojadas si se desea, para reducir el tiempo de cocción), la patata (si se usa) y el caldo." },
+                { "descripcion": "Cocer a fuego medio-bajo durante 30-40 minutos o hasta que las lentejas estén tiernas. La patata es opcional y debe ser una porción pequeña por la diabetes." }
+            ],
+            "presentacion": "Un clásico muy económico y nutritivo, perfecto para congelar en porciones individuales. Alto en fibra."
+        },
+        {
+            "id": "receta-005",
+            "descripcion": "Avena Nocturna con Manzana y Canela (R)",
+            "tiempo_preparacion": "00:05:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Copos de avena integral",
+                    "cantidad": 50,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.00 }
+                },
+                {
+                    "descripcion": "Leche (o bebida vegetal sin azúcar)",
+                    "cantidad": 150,
+                    "unidad": "ml",
+                    "coste": { "estimado_eur_kg": 0.20 }
+                },
+                {
+                    "descripcion": "Manzana (rallada o en trozos)",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.20 }
+                },
+                {
+                    "descripcion": "Canela y semillas de chía (opcional)",
+                    "cantidad": 1,
+                    "unidad": "racion",
+                    "coste": { "estimado_eur_kg": 0.10 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Mezclar la avena, la leche, la manzana y la canela en un recipiente." },
+                { "descripcion": "Tapar y refrigerar durante toda la noche (Overnight Oats)." },
+                { "descripcion": "Servir frío al día siguiente. Se puede calentar un poco si se prefiere." }
+            ],
+            "presentacion": "Desayuno rápido, alto en fibra, ideal para el control de la glucemia. No congelar."
+        },
+        {
+            "id": "receta-006",
+            "descripcion": "Revuelto de Espinacas y Champiñones (R)",
+            "tiempo_preparacion": "00:10:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Espinacas frescas",
+                    "cantidad": 200,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.80 }
+                },
+                {
+                    "descripcion": "Champiñones (laminados)",
+                    "cantidad": 150,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.50 }
+                },
+                {
+                    "descripcion": "Huevos",
+                    "cantidad": 2,
+                    "unidad": "unidad",
+                    "coste": { "estimado_eur_kg": 0.15 }
+                },
+                {
+                    "descripcion": "Ajo picado",
+                    "cantidad": 1,
+                    "unidad": "diente",
+                    "coste": { "estimado_eur_kg": 0.05 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Saltear el ajo y los champiñones hasta que suelten el agua." },
+                { "descripcion": "Añadir las espinacas hasta que reduzcan su volumen." },
+                { "descripcion": "Batir los huevos con sal y pimienta. Verter en la sartén y remover hasta que cuajen." }
+            ],
+            "presentacion": "Desayuno o cena rápida, nutritiva y baja en carbohidratos. Acompañar con una tostada integral (no incluida en la receta)."
+        },
+        {
+            "id": "receta-007",
+            "descripcion": "Bocadito de Atún y Pimiento (R)",
+            "tiempo_preparacion": "00:05:00",
+            "ingredientes": [
+                {
+                    "descripcion": "Atún en lata (al natural o en aceite de oliva escurrido)",
+                    "cantidad": 100,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 4.00 }
+                },
+                {
+                    "descripcion": "Pimiento asado (en conserva o fresco asado y troceado)",
+                    "cantidad": 50,
+                    "unidad": "gr",
+                    "coste": { "estimado_eur_kg": 1.00 }
+                },
+                {
+                    "descripcion": "Tostada integral",
+                    "cantidad": 1,
+                    "unidad": "unidad",
+                    "coste": { "estimado_eur_kg": 0.10 }
+                }
+            ],
+            "preparacion": [
+                { "descripcion": "Mezclar el atún escurrido con el pimiento troceado." },
+                { "descripcion": "Servir la mezcla sobre la tostada integral." }
+            ],
+            "presentacion": "Opción de desayuno o merienda rápida, fuente de proteína. No congelable."
+        }
+    ]
+}
