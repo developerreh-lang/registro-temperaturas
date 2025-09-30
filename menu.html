@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Semanal DietoEconomista</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #3f51b5;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .week-header {
+            background-color: #5c6bc0;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .week-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .week-content.expanded {
+            max-height: 5000px; /* Suficientemente grande para el contenido */
+        }
+        .day-header {
+            background-color: #e8eaf6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            font-weight: 500;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .day-content {
+            padding: 0 0 15px 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .day-content.expanded {
+            max-height: 5000px;
+        }
+        .meal {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 5px solid #3f51b5;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .meal h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #3f51b5;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .recipe-details {
+            border: 1px dashed #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #fff;
+            font-family: monospace; /* Fuente de paso fijo para detalles de receta */
+            white-space: pre-wrap;
+        }
+        .recipe-details h5 {
+            color: #d32f2f;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .recipe-details p {
+            margin: 5px 0;
+        }
+        .icon {
+            font-family: monospace;
+            font-size: 1.2em;
+        }
+        .congelable { color: #4caf50; font-weight: bold; }
+        .rapido { color: #ff9800; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plan Semanal de Comidas</h1>
+        <div class="card">
+            <div class="week-header" onclick="toggleWeek(this)">
+                <span>Semana 1: 01/10/2025 - 07/10/2025</span>
+                <span class="icon">&#9660;</span>
+            </div>
+            <div class="week-content expanded">
+                
+                <div class="day-header" onclick="toggleDay(this)">
+                    <span>Martes, 01 de Octubre</span>
+                    <span class="icon">&#9658;</span>
+                </div>
+                <div class="day-content">
+                    
+                    <div class="meal">
+                        <h4>Desayuno</h4>
+                        <p>Avena Nocturna con Manzana y Canela <span class="rapido">(R)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-005</h5>
+                            <p><strong>Tiempo:</strong> 00:05:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>50 gr de Copos de avena integral</li>
+                                <li>150 ml de Leche (o bebida vegetal sin azúcar)</li>
+                                <li>100 gr de Manzana (rallada o en trozos)</li>
+                                <li>Canela y semillas de chía (opcional)</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Mezclar la avena, la leche, la manzana y la canela en un recipiente.</li>
+                                <li>Tapar y refrigerar durante toda la noche (Overnight Oats).</li>
+                                <li>Servir frío al día siguiente. Se puede calentar un poco si se prefiere.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Desayuno rápido, alto en fibra, ideal para el control de la glucemia. No congelar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Comida</h4>
+                        <p>Crema de Calabaza y Coliflor <span class="congelable">(C)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-001</h5>
+                            <p><strong>Tiempo:</strong> 00:20:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>500 gr de Calabaza (troceada)</li>
+                                <li>300 gr de Coliflor (floretes)</li>
+                                <li>100 gr de Cebolla</li>
+                                <li>500 ml de Caldo de verduras bajo en sodio</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Sofreír la cebolla picada en una olla grande.</li>
+                                <li>Añadir la calabaza y la coliflor. Cubrir con el caldo y cocinar a fuego medio hasta que las verduras estén tiernas (aprox. 15 minutos).</li>
+                                <li>Triturar hasta obtener una crema suave. Ajustar sal y pimienta.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Servir caliente o congelar en porciones una vez fría. Apta para diabéticos, bajo en carbohidratos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Cena</h4>
+                        <p>Tortilla Española de Calabacín y Cebolla <span class="rapido">(R)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-003</h5>
+                            <p><strong>Tiempo:</strong> 00:25:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>500 gr de Calabacín (en rodajas finas)</li>
+                                <li>150 gr de Cebolla (en juliana)</li>
+                                <li>6 unidad de Huevos</li>
+                                <li>Aceite de oliva y sal</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Pochar el calabacín y la cebolla en aceite de oliva a fuego bajo hasta que estén blandos. Escurrir bien el exceso de aceite.</li>
+                                <li>Batir los huevos con un poco de sal. Incorporar las verduras pochadas.</li>
+                                <li>Cuajar en una sartén antiadherente por ambos lados.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Se puede comer fría o caliente. Es una opción rápida para la cena. Controlar la porción de huevo.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="day-header" onclick="toggleDay(this)">
+                    <span>Miércoles, 02 de Octubre</span>
+                    <span class="icon">&#9658;</span>
+                </div>
+                <div class="day-content">
+                    
+                    <div class="meal">
+                        <h4>Desayuno</h4>
+                        <p>Bocadito de Atún y Pimiento <span class="rapido">(R)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-007</h5>
+                            <p><strong>Tiempo:</strong> 00:05:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>100 gr de Atún en lata (al natural o en aceite de oliva escurrido)</li>
+                                <li>50 gr de Pimiento asado (en conserva o fresco asado y troceado)</li>
+                                <li>1 unidad de Tostada integral</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Mezclar el atún escurrido con el pimiento troceado.</li>
+                                <li>Servir la mezcla sobre la tostada integral.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Opción de desayuno o merienda rápida, fuente de proteína. No congelable.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Comida</h4>
+                        <p>Salteado de Pollo y Brócoli con Especias <span class="congelable">(C)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-002</h5>
+                            <p><strong>Tiempo:</strong> 00:15:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>600 gr de Pechuga de pollo (en tiras)</li>
+                                <li>400 gr de Brócoli (floretes)</li>
+                                <li>200 gr de Pimiento rojo (en tiras)</li>
+                                <li>100 gr de Cebolla (en juliana)</li>
+                                <li>Aceite de oliva, comino, pimentón dulce</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Saltear el pollo en la sartén con un poco de aceite de oliva hasta que esté dorado.</li>
+                                <li>Añadir la cebolla y el pimiento, cocinar 5 minutos. Incorporar el brócoli y las especias.</li>
+                                <li>Tapar y cocinar a fuego lento 5-7 minutos hasta que el brócoli esté al dente.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Ideal para congelar. Servir con una porción pequeña de arroz integral o quinua (no incluida en la receta para mantenerla simple).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Cena</h4>
+                        <p>Crema de Calabaza y Coliflor <span class="congelable">(C)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-001</h5>
+                            <p><strong>Tiempo:</strong> 00:20:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>500 gr de Calabaza (troceada)</li>
+                                <li>300 gr de Coliflor (floretes)</li>
+                                <li>100 gr de Cebolla</li>
+                                <li>500 ml de Caldo de verduras bajo en sodio</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Sofreír la cebolla picada en una olla grande.</li>
+                                <li>Añadir la calabaza y la coliflor. Cubrir con el caldo y cocinar a fuego medio hasta que las verduras estén tiernas (aprox. 15 minutos).</li>
+                                <li>Triturar hasta obtener una crema suave. Ajustar sal y pimienta.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Servir caliente o congelar en porciones una vez fría. Apta para diabéticos, bajo en carbohidratos.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="day-header" onclick="toggleDay(this)">
+                    <span>Jueves, 03 de Octubre</span>
+                    <span class="icon">&#9658;</span>
+                </div>
+                <div class="day-content">
+                    
+                    <div class="meal">
+                        <h4>Desayuno</h4>
+                        <p>Revuelto de Espinacas y Champiñones <span class="rapido">(R)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-006</h5>
+                            <p><strong>Tiempo:</strong> 00:10:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>200 gr de Espinacas frescas</li>
+                                <li>150 gr de Champiñones (laminados)</li>
+                                <li>2 unidad de Huevos</li>
+                                <li>Ajo picado</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Saltear el ajo y los champiñones hasta que suelten el agua.</li>
+                                <li>Añadir las espinacas hasta que reduzcan su volumen.</li>
+                                <li>Batir los huevos con sal y pimienta. Verter en la sartén y remover hasta que cuajen.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Desayuno o cena rápida, nutritiva y baja en carbohidratos. Acompañar con una tostada integral (no incluida en la receta).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Comida</h4>
+                        <p>Lentejas Guisadas con Verduras <span class="congelable">(C)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-004</h5>
+                            <p><strong>Tiempo:</strong> 00:40:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>400 gr de Lentejas Pardinas</li>
+                                <li>150 gr de Zanahoria (troceada)</li>
+                                <li>100 gr de Puerro (troceado)</li>
+                                <li>100 gr de Patata (en cubos pequeños, opcional)</li>
+                                <li>1000 ml de Caldo de pollo o verduras bajo en sodio</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>En una olla, sofreír el puerro y la zanahoria.</li>
+                                <li>Añadir las lentejas (previamente remojadas si se desea, para reducir el tiempo de cocción), la patata (si se usa) y el caldo.</li>
+                                <li>Cocer a fuego medio-bajo durante 30-40 minutos o hasta que las lentejas estén tiernas. La patata es opcional y debe ser una porción pequeña por la diabetes.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Un clásico muy económico y nutritivo, perfecto para congelar en porciones individuales. Alto en fibra.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="meal">
+                        <h4>Cena</h4>
+                        <p>Salteado de Pollo y Brócoli con Especias <span class="congelable">(C)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-002</h5>
+                            <p><strong>Tiempo:</strong> 00:15:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>600 gr de Pechuga de pollo (en tiras)</li>
+                                <li>400 gr de Brócoli (floretes)</li>
+                                <li>200 gr de Pimiento rojo (en tiras)</li>
+                                <li>100 gr de Cebolla (en juliana)</li>
+                                <li>Aceite de oliva, comino, pimentón dulce</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Saltear el pollo en la sartén con un poco de aceite de oliva hasta que esté dorado.</li>
+                                <li>Añadir la cebolla y el pimiento, cocinar 5 minutos. Incorporar el brócoli y las especias.</li>
+                                <li>Tapar y cocinar a fuego lento 5-7 minutos hasta que el brócoli esté al dente.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Ideal para congelar. Servir con una porción pequeña de arroz integral o quinua (no incluida en la receta para mantenerla simple).</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="day-header" onclick="toggleDay(this)">
+                    <span>Viernes, 04 de Octubre</span>
+                    <span class="icon">&#9658;</span>
+                </div>
+                <div class="day-content">
+                    
+                    <div class="meal">
+                        <h4>Desayuno</h4>
+                        <p>Avena Nocturna con Manzana y Canela <span class="rapido">(R)</span></p>
+                        <div class="recipe-details">
+                            <h5>Receta: receta-005</h5>
+                            <p><strong>Tiempo:</strong> 00:05:00</p>
+                            <p><strong>Ingredientes:</strong></p>
+                            <ul>
+                                <li>50 gr de Copos de avena integral</li>
+                                <li>150 ml de Leche (o bebida vegetal sin azúcar)</li>
+                                <li>100 gr de Manzana (rallada o en trozos)</li>
+                                <li>Canela y semillas de chía (opcional)</li>
+                            </ul>
+                            <p><strong>Preparación:</strong></p>
+                            <ol>
+                                <li>Mezclar la avena, la leche, la manzana y la canela en un recipiente.</li>
+                                <li>Tapar y refrigerar durante toda la noche (Overnight Oats).</li>
+                                <li>Servir frío al día siguiente. Se puede calentar un poco si se prefiere.</li>
+                            </ol>
+                            <p><strong>Presentación:</strong> Desayuno rápido, alto en fibra, ideal para el control de la glucemia. No congelar.</p>
+                        </d
